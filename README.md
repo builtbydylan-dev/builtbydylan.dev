@@ -19,20 +19,19 @@ All copy lives in `src/content/`, so you rarely need to touch components:
 
 | File | What it controls |
 | --- | --- |
-| `site.ts` | Name, SEO title/description, availability badge, reply time, hero promises, nav, social links |
-| `services.ts` | The two service cards (what's included, "good fit if") |
+| `site.ts` | Name, location, photo, SEO title/description, availability badge, reply time, hero promises, nav, social links |
+| `services.ts` | Service cards with starting prices, plus the "also available" extras |
 | `projects.ts` | The Work section (see below) |
+| `testimonials.ts` | Client quotes. The Testimonials section appears once this has an entry |
 | `process.ts` | "How a project works" steps and "Why work with me" points |
 | `faq.ts` | FAQ questions and answers (also published as FAQ structured data for Google) |
 
-The bio and toolbox are in `src/components/about.tsx`.
+The bio and toolbox are in `src/components/about.tsx`. Your headshot is `public/dylan-hovanec.jpg`.
 
 ### Adding projects
 
 1. Put a screenshot in `public/work/` (16:10 works best, e.g. 1600×1000).
-2. Add an entry to `projects` in `src/content/projects.ts` (the file has a commented example).
-
-While the list is empty, the Work section shows animated "case study loading" placeholders.
+2. Add an entry to `projects` in `src/content/projects.ts`. Set `featured: true` to show it full width.
 
 ## Contact form → your inbox (Resend)
 
@@ -45,7 +44,7 @@ One-time setup:
 3. **API Keys → Create API key** (sending access is enough).
 4. In **Vercel → Project → Settings → Environment Variables**, add:
    - `RESEND_API_KEY`: the key from step 3
-   - `CONTACT_TO_EMAIL`: the inbox where inquiries should go
+   - `CONTACT_TO_EMAIL`: the inbox where inquiries should go (builtbydylan.dev@gmail.com)
    - `CONTACT_FROM_EMAIL` (optional): defaults to `Built by Dylan <inquiries@builtbydylan.dev>`
 5. Redeploy, then send yourself a test inquiry.
 

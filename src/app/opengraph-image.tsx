@@ -61,7 +61,7 @@ export default async function OpengraphImage() {
             Websites that work as hard as you do
           </div>
           <div style={{ marginTop: 28, fontSize: 32, color: C.muted, maxWidth: 940, lineHeight: 1.35 }}>
-            Fast, modern websites for local businesses &amp; startups.
+            Fast, modern websites for small businesses, churches &amp; startups.
           </div>
         </div>
 

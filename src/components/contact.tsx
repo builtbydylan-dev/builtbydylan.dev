@@ -5,7 +5,7 @@ import { Section, Window } from "./ui";
 const nextSteps = [
   { title: "I read your message", body: `And reply ${site.replyTime}, usually with a couple of questions.` },
   { title: "We have a quick call", body: "Free and no-pressure. We talk goals, scope and timing." },
-  { title: "You get a fixed quote", body: "Clear scope and price in writing. You decide, no hard sell." },
+  { title: "You get a clear quote", body: "Scope and price in writing. You decide, no hard sell." },
 ];
 
 export function Contact() {

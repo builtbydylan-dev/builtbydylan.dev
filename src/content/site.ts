@@ -4,21 +4,28 @@
  */
 export const site = {
   name: "Built by Dylan",
-  owner: "Dylan",
+  owner: "Dylan Hovanec",
   domain: "builtbydylan.dev",
   url: "https://builtbydylan.dev",
-  title: "Built by Dylan: websites for small businesses & startups",
+  title: "Built by Dylan: websites for small businesses, churches & startups",
   description:
-    "Dylan designs, builds and looks after fast, modern websites for local businesses and startups, so you can get back to running yours.",
+    "Dylan Hovanec designs, builds and looks after fast, modern websites for small businesses, churches and ministries, and startups, in Northeast Ohio and anywhere online.",
 
-  /** Shown in the hero terminal and the header status dot. */
+  /** Where you're based and who you serve. */
+  location: "Northeast Ohio",
+  serviceArea: "Northeast Ohio & remote",
+
+  /** Headshot in /public, shown in the About section. */
+  photo: "/dylan-hovanec.jpg",
+
+  /** Shown in the hero badge and terminal. */
   availability: "Booking new projects now",
 
   /** Promise shown next to the contact form. */
   replyTime: "within one business day",
 
   /** Short trust points under the hero buttons. */
-  promises: ["Free intro call", "Fixed quote up front", "You own everything"],
+  promises: ["Free intro call", "Websites from $250", "Reply within 1 business day"],
 
   nav: [
     { label: "Services", href: "#services" },
@@ -28,5 +35,5 @@ export const site = {
     { label: "FAQ", href: "#faq" },
   ],
 
-  socials: [{ label: "GitHub", href: "https://github.com/builtbydylan-dev" }],
+  socials: [{ label: "Instagram", href: "https://www.instagram.com/dylanhovaneccc/" }],
 } as const;

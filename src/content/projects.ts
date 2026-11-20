@@ -12,24 +12,47 @@ export type Project = {
   url?: string;
   /** Screenshot in /public, e.g. "/work/acme.jpg" (16:10 works best). */
   image?: string;
-  /** Optional outcomes, e.g. "Bookings up 40% in 3 months". Only use real numbers. */
+  /** Optional outcomes. Only use real, verifiable facts. */
   results?: string[];
+  /** Show this project larger, across the full width. */
+  featured?: boolean;
 };
 
-/**
- * Add your projects here, newest first.
- * While this list is empty, the Work section shows "case study loading" slots.
- *
- * Example:
- * {
- *   name: "Acme Plumbing",
- *   client: "Local trades business",
- *   summary: "Replaced a slow template site with a fast custom build focused on emergency call-outs.",
- *   tags: ["Marketing site", "Local SEO"],
- *   year: 2026,
- *   url: "https://example.com",
- *   image: "/work/acme.jpg",
- *   results: ["Loads in under 1s on mobile"],
- * },
- */
-export const projects: Project[] = [];
+/** Newest or most important first. Screenshots live in /public/work (1600×1000). */
+export const projects: Project[] = [
+  {
+    name: "Ministry Roots",
+    client: "My own product · youth ministry software",
+    summary:
+      "Roots helps youth ministry teams track conversations, check-ins and milestones with every student, so no one falls through the cracks. I founded Ministry Roots and built the website plus the Roots app for iPhone, Android and the web, with team chat, reminders, push notifications and subscriptions.",
+    tags: ["Website", "iOS & Android app", "Subscriptions"],
+    year: 2026,
+    url: "https://ministryroots.com",
+    image: "/work/ministry-roots.jpg",
+    results: [
+      "Live on the App Store and Google Play",
+      "Used by youth ministry teams, including Greenford Christian Church",
+    ],
+    featured: true,
+  },
+  {
+    name: "The Well Productions",
+    client: "Worship ministry consulting",
+    summary:
+      "A site for The Well Consulting, which helps senior pastors and worship pastors get aligned and build healthy worship ministries. A bold look, clear service pages and one simple next step: set up a conversation.",
+    tags: ["Marketing site", "Ministry"],
+    year: 2026,
+    url: "https://www.thewellproductions.com",
+    image: "/work/the-well-productions.jpg",
+  },
+  {
+    name: "MAVON Beauty",
+    client: "Bridal hair & makeup · Copley, OH",
+    summary:
+      "A site for a Northeast Ohio bridal hair and makeup studio: service pages for weddings, studio and holiday glam, a gallery, venue guides and a journal, all built to turn browsing brides into booked dates.",
+    tags: ["Marketing site", "SEO", "Blog"],
+    year: 2026,
+    url: "https://mavonbeauty.com",
+    image: "/work/mavon-beauty.jpg",
+  },
+];

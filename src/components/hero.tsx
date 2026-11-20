@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import { extras, services } from "@/content/services";
 import { site } from "@/content/site";
 import { ArrowRight, ButtonLink, Window } from "./ui";
 
@@ -32,9 +33,10 @@ export function Hero() {
           </h1>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted sm:text-xl sm:leading-relaxed">
-            I&apos;m Dylan. I design, build and look after fast, modern websites for{" "}
-            <span className="text-fg">local businesses</span> and{" "}
-            <span className="text-fg">startups</span>, so you can get back to running yours.
+            I&apos;m Dylan Hovanec. I design, build and look after fast, modern websites for{" "}
+            <span className="text-fg">small businesses</span>,{" "}
+            <span className="text-fg">churches &amp; ministries</span> and{" "}
+            <span className="text-fg">startups</span>, so you can get back to the work that matters.
           </p>
 
           <div className="mt-9 flex flex-wrap gap-3">
@@ -71,7 +73,8 @@ const script: Step[] = [
     cmd: "whoami",
     out: (
       <>
-        dylan <span className="text-faint">·</span> web developer for small biz &amp; startups
+        dylan hovanec <span className="text-faint">·</span> web developer <span className="text-faint">·</span>{" "}
+        {site.location.toLowerCase()}
       </>
     ),
   },
@@ -79,8 +82,11 @@ const script: Step[] = [
     cmd: "ls services/",
     out: (
       <span className="flex flex-wrap gap-x-5">
-        <span className="text-sky">marketing-sites/</span>
-        <span className="text-sky">care-and-maintenance/</span>
+        {[...services, ...extras].map((s) => (
+          <span key={s.id} className="text-sky">
+            {s.id}/
+          </span>
+        ))}
       </span>
     ),
   },

@@ -5,7 +5,7 @@ export const process = [
   },
   {
     title: "Plan & quote",
-    body: "I map out the pages, features and timeline, then send a clear fixed quote. No surprises later.",
+    body: "I map out the pages, features and timeline, then send a clear quote with exactly what's included. No surprises later.",
   },
   {
     title: "Design & build",
@@ -20,7 +20,7 @@ export const process = [
 export const principles = [
   {
     title: "You work with me, directly",
-    body: "No account managers, no hand-offs. The person you talk to is the person building your site.",
+    body: "No account managers or hand-offs. I'm your point of contact from start to finish, and I bring in my design partner when you need a logo or branding.",
   },
   {
     title: "Fast by default",

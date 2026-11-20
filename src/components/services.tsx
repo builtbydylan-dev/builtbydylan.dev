@@ -1,4 +1,4 @@
-import { services } from "@/content/services";
+import { extras, services } from "@/content/services";
 import { ArrowRight, Section } from "./ui";
 
 export function Services() {
@@ -7,17 +7,19 @@ export function Services() {
       id="services"
       command="ls services/"
       title="What I build"
-      intro="Two things, done properly: websites that win you customers, and the ongoing care that keeps them working."
+      intro="Websites that bring people through your door, the care that keeps them working, and a few extras to round out your brand."
     >
       <div className="grid gap-5 lg:grid-cols-2">
-        {services.map((service, i) => (
+        {services.map((service) => (
           <article
             key={service.id}
             className="group flex flex-col rounded-xl border border-line bg-surface transition-colors duration-300 hover:border-line-strong"
           >
-            <header className="flex items-center justify-between border-b border-line px-5 py-3 font-mono text-xs sm:px-7">
+            <header className="flex items-center justify-between gap-4 border-b border-line px-5 py-3 font-mono text-xs sm:px-7">
               <span className="text-sky">{service.id}/</span>
-              <span className="text-faint">0{i + 1}</span>
+              <span className="rounded-md border border-accent/30 bg-accent/10 px-2 py-0.5 text-accent">
+                {service.price}
+              </span>
             </header>
 
             <div className="flex flex-1 flex-col p-5 sm:p-7">
@@ -46,8 +48,27 @@ export function Services() {
         ))}
       </div>
 
+      <h3 className="mt-14 font-mono text-sm text-faint">
+        <span className="text-accent">#</span> also available
+      </h3>
+      <ul className="mt-5 grid gap-5 md:grid-cols-3">
+        {extras.map((extra) => (
+          <li
+            key={extra.id}
+            className="flex flex-col rounded-xl border border-line bg-surface p-5 transition-colors duration-300 hover:border-line-strong sm:p-6"
+          >
+            <div className="flex items-baseline justify-between gap-3 font-mono text-xs">
+              <span className="text-sky">{extra.id}/</span>
+              <span className={extra.price.startsWith("from") ? "text-accent" : "text-faint"}>{extra.price}</span>
+            </div>
+            <p className="mt-3 text-lg font-semibold tracking-[-0.01em]">{extra.title}</p>
+            <p className="mt-2 text-[15px] leading-relaxed text-muted">{extra.summary}</p>
+          </li>
+        ))}
+      </ul>
+
       <p className="mt-8 text-muted">
-        Not sure which you need?{" "}
+        Prices are starting points. Not sure what you need?{" "}
         <a
           href="#contact"
           className="inline-flex items-center gap-1.5 font-medium text-fg underline decoration-accent/50 underline-offset-4 transition-colors hover:decoration-accent"

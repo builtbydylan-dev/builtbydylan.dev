@@ -6,6 +6,7 @@ import { Process } from "@/components/process";
 import { Services } from "@/components/services";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { Testimonials } from "@/components/testimonials";
 import { Work } from "@/components/work";
 import { faq } from "@/content/faq";
 import { services } from "@/content/services";
@@ -20,7 +21,15 @@ const jsonLd = {
       name: site.name,
       url: site.url,
       description: site.description,
-      founder: { "@type": "Person", name: site.owner },
+      image: `${site.url}${site.photo}`,
+      areaServed: [site.location, "United States"],
+      founder: {
+        "@type": "Person",
+        name: site.owner,
+        jobTitle: "Web developer",
+        image: `${site.url}${site.photo}`,
+        sameAs: site.socials.map((s) => s.href),
+      },
       sameAs: site.socials.map((s) => s.href),
       hasOfferCatalog: {
         "@type": "OfferCatalog",
@@ -50,6 +59,7 @@ export default function Home() {
         <Hero />
         <Services />
         <Work />
+        <Testimonials />
         <Process />
         <About />
         <Faq />

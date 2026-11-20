@@ -1,8 +1,10 @@
 export const NEEDS = [
   { value: "new-site", label: "A new website" },
-  { value: "care", label: "Care & maintenance" },
   { value: "existing-site", label: "Help with my current site" },
-  { value: "not-sure", label: "Not sure yet" },
+  { value: "care", label: "Care & maintenance" },
+  { value: "business-card", label: "Digital business card" },
+  { value: "branding", label: "Logo & branding" },
+  { value: "not-sure", label: "Something else / not sure" },
 ] as const;
 
 export const TIMELINES = [

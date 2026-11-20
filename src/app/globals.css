@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #08090c;
+  --color-surface: #0d1015;
+  --color-raised: #12161d;
+  --color-line: #1d232c;
+  --color-line-strong: #2a323d;
+  --color-fg: #e8ebef;
+  --color-muted: #9ba4b1;
+  --color-faint: #747d8a;
+  --color-accent: #5cf59a;
+  --color-accent-ink: #03140a;
+  --color-amber: #f7c56b;
+  --color-sky: #82c8ff;
+  --color-rose: #ff8a8a;
+
+  --font-sans: var(--font-geist), var(--font-jetbrains-symbols), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), var(--font-jetbrains-symbols), ui-monospace, "SFMono-Regular", Menlo,
+    monospace;
+
+  --animate-blink: blink 1.1s steps(1, end) infinite;
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background: var(--color-bg);
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /* Faint grid behind the hero, fading out toward the edges. */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 40%, transparent 100%);
+  }
+
+  .glow {
+    background: radial-gradient(closest-side, rgb(92 245 154 / 0.16), transparent);
+  }
+
+  /* Hero terminal: commands type out, output fades in, all in CSS. */
+  .term-type {
+    display: inline-block;
+    vertical-align: bottom;
+    overflow: hidden;
+    white-space: pre;
+    width: calc(var(--n) * 1ch);
+  }
+
+  .term-reveal {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .term-type {
+      width: 0;
+      animation: term-type calc(var(--n) * 55ms) steps(var(--n), end) var(--d) forwards;
+    }
+
+    .term-reveal {
+      opacity: 0;
+      animation: term-reveal 1ms linear var(--d) forwards;
+    }
+  }
+
+  @keyframes term-type {
+    to {
+      width: calc(var(--n) * 1ch);
+    }
+  }
+
+  @keyframes term-reveal {
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Loading shimmer for placeholder project cards. */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--color-raised) 0%,
+      var(--color-line-strong) 50%,
+      var(--color-raised) 100%
+    );
+    background-size: 200% 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .shimmer {
+      animation: shimmer 2.4s ease-in-out infinite;
+    }
+  }
+
+  @keyframes shimmer {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: -100% 0;
+    }
+  }
+
+  /* FAQ disclosure marker. */
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item[open] .faq-marker {
+    transform: rotate(45deg);
+  }
+}

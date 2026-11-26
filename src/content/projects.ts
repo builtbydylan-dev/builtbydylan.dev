@@ -24,7 +24,7 @@ export const projects: Project[] = [
     name: "Ministry Roots",
     client: "My own product · youth ministry software",
     summary:
-      "Roots helps youth ministry teams track conversations, check-ins and milestones with every student, so no one falls through the cracks. I founded Ministry Roots and built the website plus the Roots app for iPhone, Android and the web, with team chat, reminders, push notifications and subscriptions.",
+      "Ministry Roots builds tools for youth ministry teams, focused on relationships, not just administration. I founded it and built the website plus Roots, its app for iPhone, Android and the web, with student profiles, team chat, reminders, push notifications and subscriptions.",
     tags: ["Website", "iOS & Android app", "Subscriptions"],
     year: 2026,
     url: "https://ministryroots.com",

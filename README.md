@@ -33,6 +33,14 @@ The bio and toolbox are in `src/components/about.tsx`. Your headshot is `public/
 1. Put a screenshot in `public/work/` (16:10 works best, e.g. 1600×1000).
 2. Add an entry to `projects` in `src/content/projects.ts`. Set `featured: true` to show it full width.
 
+## 3D build moments
+
+Three pinned sections (`BuildMoment` in `src/app/page.tsx`) build a laptop, a phone and a business card out of blocks as you scroll, using three.js (`src/components/build/`). Change what's on a device screen with its `screen` prop (any image in `public/`). three.js only downloads when a moment is near the screen, the animation only runs while it's visible, and visitors who prefer reduced motion see the finished devices without the scroll effect.
+
+## Link preview image
+
+`src/app/opengraph-image.png` is the picture people see when the link is shared (Messages, Slack, social). It's a 1200×630 screenshot of the hero; replace it if the hero changes. Preview URLs follow Vercel's production domain automatically (`src/lib/site-url.ts`).
+
 ## Contact form → your inbox (Resend)
 
 The form posts to a server action (`src/app/actions.ts`), which validates input, filters out bots (honeypot field plus a too-fast-to-be-human check) and emails you through Resend. Replying to the email replies straight to the person who filled it in.
@@ -62,13 +70,13 @@ src/
     layout.tsx            fonts, metadata, skip link
     page.tsx              composes the sections + JSON-LD structured data
     actions.ts            contact form server action
-    opengraph-image.tsx   social share image (generated at build time)
+    opengraph-image.png   link preview image (screenshot of the hero)
     icon.svg, robots.ts, sitemap.ts, not-found.tsx
     fonts/                self-hosted Geist + JetBrains Mono (no Google Fonts request)
   components/             one file per section, plus ui.tsx primitives
+    build/                3D scroll moments (three.js)
   content/                editable copy (see above)
   lib/                    form validation + Resend email sender
-assets/og/                fonts used only to render the share image
 ```
 
 The hero terminal animation is pure CSS. It works without JavaScript, and it shows the finished state immediately for visitors who prefer reduced motion.

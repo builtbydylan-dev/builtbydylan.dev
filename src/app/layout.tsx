@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { site } from "@/content/site";
+import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const geist = localFont({
@@ -28,18 +29,18 @@ const jetbrainsSymbols = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  metadataBase: new URL(siteUrl),
   title: {
     default: site.title,
     template: `%s · ${site.name}`,
   },
   description: site.description,
   applicationName: site.name,
-  authors: [{ name: site.owner, url: site.url }],
+  authors: [{ name: site.owner, url: siteUrl }],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    url: site.url,
+    url: siteUrl,
     siteName: site.name,
     title: site.title,
     description: site.description,

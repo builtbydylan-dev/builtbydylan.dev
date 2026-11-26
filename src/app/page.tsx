@@ -1,4 +1,5 @@
 import { About } from "@/components/about";
+import { BuildMoment } from "@/components/build/build-moment";
 import { Contact } from "@/components/contact";
 import { Faq } from "@/components/faq";
 import { Hero } from "@/components/hero";
@@ -11,23 +12,24 @@ import { Work } from "@/components/work";
 import { faq } from "@/content/faq";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
+import { siteUrl } from "@/lib/site-url";
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "ProfessionalService",
-      "@id": `${site.url}/#business`,
+      "@id": `${siteUrl}/#business`,
       name: site.name,
-      url: site.url,
+      url: siteUrl,
       description: site.description,
-      image: `${site.url}${site.photo}`,
+      image: `${siteUrl}${site.photo}`,
       areaServed: [site.location, "United States"],
       founder: {
         "@type": "Person",
         name: site.owner,
         jobTitle: "Web developer",
-        image: `${site.url}${site.photo}`,
+        image: `${siteUrl}${site.photo}`,
         sameAs: site.socials.map((s) => s.href),
       },
       sameAs: site.socials.map((s) => s.href),
@@ -57,12 +59,58 @@ export default function Home() {
       <SiteHeader />
       <main id="main">
         <Hero />
+        <BuildMoment
+          id="build-website"
+          variant="laptop"
+          command="build --website"
+          title="Every site starts as blocks."
+          screen="/work/mavon-beauty.jpg"
+          fallback={{ src: "/work/mavon-beauty.jpg", alt: "The MAVON Beauty website" }}
+        >
+          <p>
+            I put yours together piece by piece: design, words, speed and search, until it&apos;s ready
+            for real customers.
+          </p>
+          <p className="font-mono text-[13px] text-faint">on screen: mavonbeauty.com</p>
+        </BuildMoment>
         <Services />
         <Work />
+        <BuildMoment
+          id="build-mobile"
+          variant="phone"
+          command="build --mobile-first"
+          title="Built for the phone in their pocket."
+          screen="/work/roots-app.webp"
+          fallback={{
+            src: "/work/roots-app.webp",
+            alt: "The Roots app showing a youth group's student list",
+            className: "aspect-[640/1385] h-full",
+          }}
+        >
+          <p>
+            Most people will find you on a phone, so everything I build starts there and scales up,
+            not the other way around.
+          </p>
+          <p className="font-mono text-[13px] text-faint">on screen: the Roots app for Ministry Roots</p>
+        </BuildMoment>
         <Testimonials />
         <Process />
         <About />
         <Faq />
+        <BuildMoment id="build-card" variant="card" command="build --business-card" title="Even your business card.">
+          <p>
+            A digital card with your details and links, plus an Apple Wallet pass, so new contacts can
+            save you in one tap.
+          </p>
+          <p>
+            <a
+              href="#contact"
+              className="font-medium text-fg underline decoration-accent/50 underline-offset-4 transition-colors hover:decoration-accent"
+            >
+              Let&apos;s build yours →
+            </a>
+          </p>
+        </BuildMoment>
         <Contact />
       </main>
       <SiteFooter />

@@ -39,7 +39,7 @@ Three pinned sections (`BuildMoment` in `src/app/page.tsx`) build a laptop, a ph
 
 ## Link preview image
 
-`src/app/opengraph-image.png` is the picture people see when the link is shared (Messages, Slack, social). It's a 1200×630 screenshot of the hero; replace it if the hero changes. Preview URLs follow Vercel's production domain automatically (`src/lib/site-url.ts`).
+`src/app/opengraph-image.png` is the picture people see when the link is shared (Messages, Slack, social). It's a 1200×630 screenshot of the top of the homepage; replace it if that changes. Preview URLs follow Vercel's production domain automatically (`src/lib/site-url.ts`).
 
 ## Contact form → your inbox (Resend)
 
@@ -72,13 +72,11 @@ src/
     actions.ts            contact form server action
     opengraph-image.png   link preview image (screenshot of the hero)
     icon.svg, robots.ts, sitemap.ts, not-found.tsx
-    fonts/                self-hosted Geist + JetBrains Mono (no Google Fonts request)
+    fonts/                self-hosted Geist (no Google Fonts request)
   components/             one file per section, plus ui.tsx primitives
     build/                3D scroll moments (three.js)
   content/                editable copy (see above)
   lib/                    form validation + Resend email sender
 ```
 
-The hero terminal animation is pure CSS. It works without JavaScript, and it shows the finished state immediately for visitors who prefer reduced motion.
-
-Fonts: [Geist](https://github.com/vercel/geist-font) and [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono), both under the SIL Open Font License.
+Font: [Geist](https://github.com/vercel/geist-font), under the SIL Open Font License.

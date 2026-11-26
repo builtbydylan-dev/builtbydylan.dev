@@ -1,17 +1,17 @@
 "use client";
 
-import { startTransition, useActionState, useEffect, useRef, type FormEvent } from "react";
+import { startTransition, useActionState, useEffect, useRef, type FormEvent, type ReactNode } from "react";
 import { sendInquiry } from "@/app/actions";
 import { LIMITS, NEEDS, TIMELINES, type InquiryField, type InquiryState } from "@/lib/inquiry";
 import { site } from "@/content/site";
-import { ArrowRight, buttonClass } from "./ui";
+import { ArrowRight, buttonClass, Check } from "./ui";
 
 const initialState: InquiryState = { status: "idle" };
 
 const FIELD_ORDER: InquiryField[] = ["name", "email", "business", "need", "timeline", "message"];
 
 const inputClass =
-  "w-full rounded-lg border border-line-strong bg-bg/70 px-3.5 py-2.5 text-[15px] text-fg placeholder:text-faint outline-none transition-[border-color,box-shadow] duration-150 hover:border-faint/60 focus:border-accent focus:shadow-[0_0_0_3px_rgb(92_245_154_/_0.18)] aria-[invalid=true]:border-rose/80";
+  "w-full rounded-xl border border-line-strong bg-surface px-4 py-3 text-[16px] text-fg placeholder:text-faint/80 outline-none transition-[border-color,box-shadow] duration-150 hover:border-fg/25 focus:border-accent focus:shadow-[0_0_0_4px_rgb(4_120_87_/_0.12)] aria-[invalid=true]:border-rose";
 
 export function ContactForm() {
   const [state, formAction, pending] = useActionState(sendInquiry, initialState);
@@ -35,23 +35,21 @@ export function ContactForm() {
 
   if (state.status === "success") {
     return (
-      <div role="status" className="font-mono text-sm leading-7">
-        <p className="text-accent">✓ inquiry sent</p>
-        <p className="mt-3 font-sans text-xl font-semibold text-fg">Thanks, that&apos;s landed in my inbox.</p>
-        <p className="mt-2 font-sans text-base leading-relaxed text-muted">
-          I&apos;ll get back to you at <span className="text-fg">{state.email}</span> {site.replyTime}. Talk soon!
-        </p>
-        <p className="mt-6 text-faint">
-          <span className="text-accent">$</span> <span className="animate-blink">_</span>
+      <div role="status" className="py-6 text-center">
+        <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-accent-soft text-accent">
+          <Check className="size-7" />
+        </span>
+        <p className="mt-5 text-2xl font-semibold tracking-[-0.02em]">Thanks, your message is on its way!</p>
+        <p className="mx-auto mt-3 max-w-md text-[17px] leading-relaxed text-muted">
+          I&apos;ll get back to you at <span className="font-semibold text-fg">{state.email}</span>{" "}
+          {site.replyTime}. Talk soon!
         </p>
       </div>
     );
   }
 
   const errorProps = (field: InquiryField) =>
-    errors[field]
-      ? { "aria-invalid": true as const, "aria-describedby": `${field}-error` }
-      : {};
+    errors[field] ? { "aria-invalid": true as const, "aria-describedby": `${field}-error` } : {};
 
   // With JS, submit inside a transition so React doesn't auto-reset the form and wipe
   // what the visitor typed when there's an error. Without JS, `action` still works.
@@ -64,7 +62,7 @@ export function ContactForm() {
   return (
     <form ref={formRef} action={formAction} onSubmit={onSubmit} noValidate className="grid gap-5">
       {state.status === "error" ? (
-        <p role="alert" className="rounded-lg border border-rose/40 bg-rose/10 px-4 py-3 text-sm text-rose">
+        <p role="alert" className="rounded-xl border border-rose/30 bg-rose/5 px-4 py-3 text-[15px] text-rose">
           {state.message}
         </p>
       ) : null}
@@ -100,7 +98,7 @@ export function ContactForm() {
         </Field>
       </div>
 
-      <Field id="business" label="Business or company" optional error={errors.business}>
+      <Field id="business" label="Business, church or organization" optional error={errors.business}>
         <input
           id="business"
           name="business"
@@ -115,12 +113,12 @@ export function ContactForm() {
       </Field>
 
       <fieldset {...(errors.need ? { "aria-describedby": "need-error" } : {})}>
-        <legend className="mb-2 text-sm font-medium text-fg">What do you need?</legend>
-        <div className="grid grid-cols-1 gap-2 min-[420px]:grid-cols-2">
+        <legend className="mb-2 text-[15px] font-semibold text-fg">What do you need?</legend>
+        <div className="grid grid-cols-1 gap-2 min-[440px]:grid-cols-2">
           {NEEDS.map((n, i) => (
             <label
               key={n.value}
-              className="flex cursor-pointer items-center gap-3 rounded-lg border border-line-strong bg-bg/70 px-3.5 py-2.5 text-[15px] text-muted transition-colors hover:border-faint/60 has-[:checked]:border-accent has-[:checked]:bg-accent/10 has-[:checked]:text-fg has-[:focus-visible]:shadow-[0_0_0_3px_rgb(92_245_154_/_0.3)]"
+              className="flex cursor-pointer items-center gap-3 rounded-xl border border-line-strong bg-surface px-4 py-3 text-[15px] text-fg transition-colors hover:border-fg/25 has-[:checked]:border-accent has-[:checked]:bg-accent-soft has-[:focus-visible]:shadow-[0_0_0_4px_rgb(4_120_87_/_0.18)]"
             >
               <input
                 type="radio"
@@ -132,7 +130,7 @@ export function ContactForm() {
               />
               <span
                 aria-hidden="true"
-                className="flex size-4 shrink-0 items-center justify-center rounded-full border border-faint peer-checked:border-accent peer-checked:[&>span]:scale-100"
+                className="flex size-[18px] shrink-0 items-center justify-center rounded-full border-2 border-line-strong peer-checked:border-accent peer-checked:[&>span]:scale-100"
               >
                 <span className="size-2 scale-0 rounded-full bg-accent transition-transform" />
               </span>
@@ -149,7 +147,7 @@ export function ContactForm() {
             id="timeline"
             name="timeline"
             defaultValue={values.timeline ?? ""}
-            className={`${inputClass} appearance-none pr-10`}
+            className={`${inputClass} appearance-none pr-11`}
             {...errorProps("timeline")}
           >
             <option value="">Choose one…</option>
@@ -162,10 +160,10 @@ export function ContactForm() {
           <svg
             viewBox="0 0 16 16"
             aria-hidden="true"
-            className="pointer-events-none absolute top-1/2 right-3.5 size-4 -translate-y-1/2 text-faint"
+            className="pointer-events-none absolute top-1/2 right-4 size-4 -translate-y-1/2 text-muted"
             fill="none"
           >
-            <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       </Field>
@@ -179,7 +177,7 @@ export function ContactForm() {
           minLength={LIMITS.messageMin}
           maxLength={LIMITS.message}
           defaultValue={values.message}
-          placeholder="What does your business do, and what should the website help with?"
+          placeholder="What does your business or ministry do, and what should the website help with?"
           className={`${inputClass} resize-y leading-relaxed`}
           {...errorProps("message")}
         />
@@ -196,18 +194,16 @@ export function ContactForm() {
         <button type="submit" disabled={pending} className={buttonClass("primary", "disabled:cursor-wait disabled:opacity-70")}>
           {pending ? (
             <>
-              <span className="size-3.5 animate-spin rounded-full border-2 border-accent-ink/30 border-t-accent-ink" aria-hidden="true" />
+              <span className="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white" aria-hidden="true" />
               Sending…
             </>
           ) : (
             <>
-              Send inquiry <ArrowRight />
+              Send message <ArrowRight />
             </>
           )}
         </button>
-        <p className="font-mono text-xs text-faint">
-          Reply {site.replyTime}. No spam, ever.
-        </p>
+        <p className="text-sm text-muted">I reply {site.replyTime}. No spam, ever.</p>
       </div>
     </form>
   );
@@ -224,13 +220,13 @@ function Field({
   label: string;
   optional?: boolean;
   error?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <div>
-      <label htmlFor={id} className="mb-2 flex items-baseline justify-between text-sm font-medium text-fg">
+      <label htmlFor={id} className="mb-2 flex items-baseline justify-between text-[15px] font-semibold text-fg">
         {label}
-        {optional ? <span className="font-mono text-xs font-normal text-faint">optional</span> : null}
+        {optional ? <span className="text-sm font-normal text-faint">Optional</span> : null}
       </label>
       {children}
       {error ? <FieldError id={`${id}-error`}>{error}</FieldError> : null}
@@ -238,10 +234,10 @@ function Field({
   );
 }
 
-function FieldError({ id, children }: { id: string; children: React.ReactNode }) {
+function FieldError({ id, children }: { id: string; children: ReactNode }) {
   return (
-    <p id={id} className="mt-1.5 font-mono text-xs text-rose">
-      ! {children}
+    <p id={id} className="mt-1.5 text-sm text-rose">
+      {children}
     </p>
   );
 }

@@ -7,7 +7,7 @@ import type { BuildScene, BuildVariant } from "./build-scene";
 type Props = {
   id: string;
   variant: BuildVariant;
-  command: string;
+  eyebrow: string;
   title: string;
   children: ReactNode;
   /** Image shown on the device's screen. */
@@ -21,7 +21,7 @@ type Props = {
  * from blocks, opens and turns. three.js is only downloaded when the section
  * gets close to the viewport, and the loop only runs while it's on screen.
  */
-export function BuildMoment({ id, variant, command, title, children, screen, fallback }: Props) {
+export function BuildMoment({ id, variant, eyebrow, title, children, screen, fallback }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [failed, setFailed] = useState(false);
@@ -61,10 +61,7 @@ export function BuildMoment({ id, variant, command, title, children, screen, fal
         scene = createBuildScene(canvas, variant, {
           screen,
           reducedMotion,
-          fonts: {
-            sans: font("--font-geist", "ui-sans-serif, system-ui, sans-serif"),
-            mono: font("--font-jetbrains", "ui-monospace, Menlo, monospace"),
-          },
+          fonts: { sans: font("--font-geist", "ui-sans-serif, system-ui, sans-serif") },
         });
       } catch {
         scene = null;
@@ -113,7 +110,7 @@ export function BuildMoment({ id, variant, command, title, children, screen, fal
       ref={sectionRef}
       id={id}
       aria-labelledby={`${id}-title`}
-      className="relative h-[180svh] border-t border-line/70 motion-reduce:h-auto"
+      className="relative h-[180svh] motion-reduce:h-auto"
     >
       <div className="sticky top-0 flex h-svh items-center overflow-hidden pt-16 motion-reduce:static motion-reduce:h-auto motion-reduce:py-24">
         <div
@@ -122,12 +119,10 @@ export function BuildMoment({ id, variant, command, title, children, screen, fal
         />
         <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-2 px-4 sm:px-6 lg:grid-cols-[0.75fr_1.25fr] lg:gap-10">
           <div>
-            <p className="font-mono text-sm text-faint">
-              <span className="text-accent">$</span> {command}
-            </p>
+            <p className="text-sm font-semibold tracking-wide text-accent uppercase">{eyebrow}</p>
             <h2
               id={`${id}-title`}
-              className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-balance sm:text-[2.6rem] sm:leading-[1.1]"
+              className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-balance sm:text-[2.75rem] sm:leading-[1.1]"
             >
               {title}
             </h2>
@@ -138,7 +133,7 @@ export function BuildMoment({ id, variant, command, title, children, screen, fal
             <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 size-full" />
             {failed && fallback ? (
               <div className="absolute inset-0 flex items-center justify-center p-4">
-                <div className={`relative overflow-hidden rounded-xl border border-line-strong ${fallback.className ?? "aspect-[16/10] w-full"}`}>
+                <div className={`relative overflow-hidden rounded-xl border border-line shadow-lg ${fallback.className ?? "aspect-[16/10] w-full"}`}>
                   <Image src={fallback.src} alt={fallback.alt} fill sizes="(min-width: 1024px) 640px, 100vw" className="object-cover object-top" />
                 </div>
               </div>

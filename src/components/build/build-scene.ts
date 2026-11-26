@@ -41,7 +41,7 @@ export type BuildSceneOptions = {
   screen?: string;
   reducedMotion: boolean;
   /** Resolved CSS font-family stacks, used to draw the business card. */
-  fonts: { sans: string; mono: string };
+  fonts: { sans: string };
 };
 
 export type BuildScene = {
@@ -53,8 +53,8 @@ export type BuildScene = {
   dispose(): void;
 };
 
-const ACCENT = new Color("#5cf59a");
-const SKY = new Color("#82c8ff");
+const ACCENT = new Color("#10b981");
+const SKY = new Color("#38bdf8");
 const BLOCK = new Color("#2f3946");
 
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
@@ -188,8 +188,8 @@ function shadowTexture() {
   c.width = c.height = 256;
   const ctx = c.getContext("2d")!;
   const grad = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
-  grad.addColorStop(0, "rgba(0,0,0,0.75)");
-  grad.addColorStop(0.6, "rgba(0,0,0,0.25)");
+  grad.addColorStop(0, "rgba(22,24,29,0.6)");
+  grad.addColorStop(0.6, "rgba(22,24,29,0.18)");
   grad.addColorStop(1, "rgba(0,0,0,0)");
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, 256, 256);
@@ -206,86 +206,101 @@ function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: numbe
   ctx.closePath();
 }
 
-function drawCardFront(fonts: BuildSceneOptions["fonts"]) {
-  const W = 1020;
-  const H = 600;
+/** The Built by Dylan mark (four blocks, one green), drawn at (x, y) with the given size. */
+function drawLogo(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, plate = true) {
+  const u = size / 32;
+  if (plate) {
+    ctx.fillStyle = "#ffffff";
+    roundRect(ctx, x, y, size, size, 9 * u);
+    ctx.fill();
+  }
+  const cells: [number, number, string][] = [
+    [8, 8, plate ? "#16181d" : "#ffffff"],
+    [17, 8, "#34d399"],
+    [8, 17, plate ? "#16181d" : "#ffffff"],
+    [17, 17, plate ? "#16181d" : "#ffffff"],
+  ];
+  for (const [cx, cy, color] of cells) {
+    ctx.fillStyle = color;
+    roundRect(ctx, x + cx * u, y + cy * u, 7 * u, 7 * u, 1.8 * u);
+    ctx.fill();
+  }
+}
+
+function cardCanvas() {
   const c = document.createElement("canvas");
-  c.width = W;
-  c.height = H;
-  const ctx = c.getContext("2d")!;
+  c.width = 1020;
+  c.height = 600;
+  return { c, ctx: c.getContext("2d")!, W: 1020, H: 600 };
+}
+
+function drawCardFront(fonts: BuildSceneOptions["fonts"]) {
+  const { c, ctx, W, H } = cardCanvas();
   const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, "#10141a");
-  bg.addColorStop(1, "#0a0c10");
+  bg.addColorStop(0, "#1b1f26");
+  bg.addColorStop(1, "#111318");
   ctx.fillStyle = bg;
   roundRect(ctx, 0, 0, W, H, 34);
   ctx.fill();
-  const glow = ctx.createRadialGradient(W * 0.85, -40, 0, W * 0.85, -40, 520);
-  glow.addColorStop(0, "rgba(92,245,154,0.28)");
-  glow.addColorStop(1, "rgba(92,245,154,0)");
+  const glow = ctx.createRadialGradient(W * 0.88, -30, 0, W * 0.88, -30, 520);
+  glow.addColorStop(0, "rgba(52,211,153,0.3)");
+  glow.addColorStop(1, "rgba(52,211,153,0)");
   ctx.fillStyle = glow;
   ctx.fillRect(0, 0, W, H);
 
   ctx.textBaseline = "alphabetic";
-  ctx.font = `500 34px ${fonts.mono}`;
-  ctx.fillStyle = "#5cf59a";
-  ctx.fillText("❯", 64, 104);
-  ctx.fillStyle = "#e8ebef";
-  ctx.fillText("builtbydylan", 104, 104);
-  const w1 = ctx.measureText("builtbydylan").width;
-  ctx.fillStyle = "#747d8a";
-  ctx.fillText(".dev", 104 + w1, 104);
+  drawLogo(ctx, 64, 58, 60);
+  ctx.fillStyle = "#ffffff";
+  ctx.font = `600 34px ${fonts.sans}`;
+  ctx.fillText("Built by Dylan", 144, 100);
 
-  ctx.fillStyle = "#e8ebef";
-  ctx.font = `600 86px ${fonts.sans}`;
-  ctx.fillText("Dylan Hovanec", 60, 330);
-  ctx.fillStyle = "#9ba4b1";
+  ctx.font = `600 88px ${fonts.sans}`;
+  ctx.fillText("Dylan Hovanec", 60, 320);
+  ctx.fillStyle = "rgba(255,255,255,0.7)";
   ctx.font = `400 36px ${fonts.sans}`;
-  ctx.fillText("Web developer · Northeast Ohio", 64, 392);
+  ctx.fillText("Web developer · Northeast Ohio", 64, 382);
 
-  ctx.strokeStyle = "#2a323d";
+  ctx.strokeStyle = "rgba(255,255,255,0.14)";
   ctx.lineWidth = 2;
   ctx.beginPath();
-  ctx.moveTo(64, 470);
-  ctx.lineTo(W - 64, 470);
+  ctx.moveTo(64, 460);
+  ctx.lineTo(W - 64, 460);
   ctx.stroke();
 
-  ctx.font = `400 28px ${fonts.mono}`;
-  ctx.fillStyle = "#82c8ff";
-  ctx.fillText("websites · care plans · branding", 64, 534);
-  ctx.fillStyle = "#5cf59a";
-  const saved = "✓ saved to wallet";
-  ctx.fillText(saved, W - 64 - ctx.measureText(saved).width, 534);
+  ctx.fillStyle = "#a7f3d0";
+  ctx.font = `500 30px ${fonts.sans}`;
+  ctx.fillText("Websites · Care plans · Branding", 64, 530);
+
+  const label = "Saved to Wallet";
+  ctx.font = `600 26px ${fonts.sans}`;
+  const lw = ctx.measureText(label).width;
+  const pw = lw + 48;
+  ctx.fillStyle = "#34d399";
+  roundRect(ctx, W - 64 - pw, 494, pw, 52, 26);
+  ctx.fill();
+  ctx.fillStyle = "#06281b";
+  ctx.fillText(label, W - 64 - pw + 24, 529);
   return c;
 }
 
 function drawCardBack(fonts: BuildSceneOptions["fonts"]) {
-  const W = 1020;
-  const H = 600;
-  const c = document.createElement("canvas");
-  c.width = W;
-  c.height = H;
-  const ctx = c.getContext("2d")!;
-  ctx.fillStyle = "#0c0f13";
+  const { c, ctx, W, H } = cardCanvas();
+  ctx.fillStyle = "#16181d";
   roundRect(ctx, 0, 0, W, H, 34);
   ctx.fill();
-  ctx.strokeStyle = "rgba(255,255,255,0.05)";
-  ctx.lineWidth = 2;
-  for (let x = 0; x <= W; x += 60) {
-    ctx.beginPath();
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, H);
-    ctx.stroke();
+  ctx.fillStyle = "rgba(255,255,255,0.07)";
+  for (let x = 30; x < W; x += 30) {
+    for (let y = 30; y < H; y += 30) {
+      ctx.beginPath();
+      ctx.arc(x, y, 1.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
   }
-  for (let y = 0; y <= H; y += 60) {
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(W, y);
-    ctx.stroke();
-  }
-  ctx.font = `600 190px ${fonts.mono}`;
-  ctx.fillStyle = "#5cf59a";
-  const mark = "❯_";
-  ctx.fillText(mark, (W - ctx.measureText(mark).width) / 2, 365);
+  drawLogo(ctx, (W - 220) / 2, 118, 220, false);
+  ctx.fillStyle = "rgba(255,255,255,0.7)";
+  ctx.font = `500 32px ${fonts.sans}`;
+  const site = "builtbydylan.dev";
+  ctx.fillText(site, (W - ctx.measureText(site).width) / 2, 452);
   return c;
 }
 
@@ -467,7 +482,7 @@ export function createBuildScene(
     track(back.geometry, backMat);
     root.add(front, back);
 
-    // Redraw once web fonts are ready so the card uses Geist and JetBrains Mono.
+    // Redraw once web fonts are ready so the card uses Geist.
     document.fonts?.ready.then(() => {
       if (disposed) return;
       frontTex.image = drawCardFront(options.fonts);

@@ -1,5 +1,6 @@
 import { About } from "@/components/about";
 import { BuildMoment } from "@/components/build/build-moment";
+import { ArrowRight } from "@/components/ui";
 import { Contact } from "@/components/contact";
 import { Faq } from "@/components/faq";
 import { Hero } from "@/components/hero";
@@ -62,7 +63,7 @@ export default function Home() {
         <BuildMoment
           id="build-website"
           variant="laptop"
-          command="build --website"
+          eyebrow="How I build"
           title="Every site starts as blocks."
           screen="/work/mavon-beauty.jpg"
           fallback={{ src: "/work/mavon-beauty.jpg", alt: "The MAVON Beauty website" }}
@@ -71,14 +72,14 @@ export default function Home() {
             I put yours together piece by piece: design, words, speed and search, until it&apos;s ready
             for real customers.
           </p>
-          <p className="font-mono text-[13px] text-faint">on screen: mavonbeauty.com</p>
+          <p className="text-[15px] text-faint">Shown: the MAVON Beauty website.</p>
         </BuildMoment>
         <Services />
         <Work />
         <BuildMoment
           id="build-mobile"
           variant="phone"
-          command="build --mobile-first"
+          eyebrow="Mobile first"
           title="Built for the phone in their pocket."
           screen="/work/roots-app.webp"
           fallback={{
@@ -91,13 +92,13 @@ export default function Home() {
             Most people will find you on a phone, so everything I build starts there and scales up,
             not the other way around.
           </p>
-          <p className="font-mono text-[13px] text-faint">on screen: the Roots app for Ministry Roots</p>
+          <p className="text-[15px] text-faint">Shown: the Roots app I built for Ministry Roots.</p>
         </BuildMoment>
         <Testimonials />
         <Process />
         <About />
         <Faq />
-        <BuildMoment id="build-card" variant="card" command="build --business-card" title="Even your business card.">
+        <BuildMoment id="build-card" variant="card" eyebrow="Digital business cards" title="Even your business card.">
           <p>
             A digital card with your details and links, plus an Apple Wallet pass, so new contacts can
             save you in one tap.
@@ -105,9 +106,9 @@ export default function Home() {
           <p>
             <a
               href="#contact"
-              className="font-medium text-fg underline decoration-accent/50 underline-offset-4 transition-colors hover:decoration-accent"
+              className="font-semibold text-accent underline decoration-accent/30 underline-offset-4 transition-colors hover:decoration-accent"
             >
-              Let&apos;s build yours →
+              Let&apos;s build yours <ArrowRight className="inline size-4" />
             </a>
           </p>
         </BuildMoment>

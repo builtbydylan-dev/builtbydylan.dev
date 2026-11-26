@@ -1,1 +1,1 @@
-A look at builtbydylan.dev: "Websites that work as hard as you do", with a terminal listing Dylan Hovanec's web services.
+A look at the Built by Dylan website: "Websites that work as hard as you do", next to screenshots of sites Dylan Hovanec built.

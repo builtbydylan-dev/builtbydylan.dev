@@ -11,23 +11,6 @@ const geist = localFont({
   display: "swap",
 });
 
-const jetbrains = localFont({
-  src: "./fonts/jetbrains-mono.woff2",
-  variable: "--font-jetbrains",
-  weight: "100 800",
-  display: "swap",
-});
-
-/** Terminal glyphs (❯ █ ░ ✓ → ↗) missing from the Latin subset above. */
-const jetbrainsSymbols = localFont({
-  src: "./fonts/jetbrains-mono-symbols.woff2",
-  variable: "--font-jetbrains-symbols",
-  weight: "400",
-  display: "swap",
-  preload: false,
-  adjustFontFallback: false,
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
@@ -54,17 +37,17 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#08090c",
-  colorScheme: "dark",
+  themeColor: "#faf9f6",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geist.variable} ${jetbrains.variable} ${jetbrainsSymbols.variable}`}>
+    <html lang="en" className={geist.variable}>
       <body className="min-h-dvh antialiased">
         <a
           href="#main"
-          className="sr-only rounded-md bg-accent px-4 py-2 font-mono text-sm text-accent-ink focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50"
+          className="sr-only rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-ink focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50"
         >
           Skip to content
         </a>
